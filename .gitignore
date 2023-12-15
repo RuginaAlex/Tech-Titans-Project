@@ -1,3 +1,10 @@
+# IDEs and editors
+.idea/
+
+
+
+
+
 ### IntelliJ IDEA ###
 out/
 !**/src/main/**/out/
