@@ -128,7 +128,8 @@ CREATE TABLE public.users (
     username character varying(256) NOT NULL,
     email character varying(256) NOT NULL,
     password_hash character varying(256) NOT NULL,
-    last_login character varying(256) NOT NULL
+    date_created date NOT NULL,
+    last_login date NOT NULL
 );
 
 
