@@ -8,12 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-enum Type {
-    DEPOSIT,
-    WITHDRAWAL,
-    TRANSFER
-
-}
 @Entity
 @Data
 @AllArgsConstructor
@@ -34,7 +28,8 @@ public class Transaction {
 
 
     @Column(name = "type")
-    private Type type;
+    @Pattern(regexp = "DEPOSIT|WITHDRAWAL|TRANSFER", message = "Type must be: DEPOSIT, WITHDRAWAL, TRANSFER")
+    private String type;
 
     @Column(name = "timestamp")
     @PastOrPresent(message = "Timestamp must be in the past or present")

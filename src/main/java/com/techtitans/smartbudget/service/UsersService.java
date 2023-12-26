@@ -33,7 +33,7 @@ public class UsersService {
             // Update fields here
             existingUser.setUsername(updatedUser.getUsername());
             existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setPassword_hash(updatedUser.getPassword_hash());
             existingUser.setDate_created(updatedUser.getDate_created());
             existingUser.setLast_login(updatedUser.getLast_login());
 
