@@ -35,8 +35,8 @@ public class Users {
     @Length(max = 255, message = "Password is too long")
     @NotEmpty(message = "Try again! Password cannot be empty")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).*$", message = "Try again! Password must meet the requirements")
-    @Column(name = "password")
-    private String password;
+    @Column(name = "password_hash")
+    private String password_hash;
 
     @Column (name = "date_created")
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,9 +46,15 @@ public class Users {
     @Temporal(TemporalType.TIMESTAMP)
     private Date last_login;
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Users{" +
+                "user_id='" + user_id + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password_hash='" + password_hash + '\'' +
+                ", date_created=" + date_created +
+                ", last_login=" + last_login +
+                '}';
+    }
 }
