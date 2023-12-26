@@ -29,8 +29,7 @@ public class Transaction {
     private BankAccounts account;
 
     @Column(name = "amount")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Amount must be greater than 0")
-    @Digits(integer = 12, fraction = 2, message = "Amount must not have more than 12 digits and 2 decimal places")
+    @Positive(message = "Amount must be a positive number")
     private double amount;
 
 

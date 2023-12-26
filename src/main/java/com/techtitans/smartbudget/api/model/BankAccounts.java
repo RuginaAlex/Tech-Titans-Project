@@ -2,10 +2,7 @@ package com.techtitans.smartbudget.api.model;
 
 import io.micrometer.core.annotation.Counted;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,8 +45,7 @@ public class BankAccounts {
     private Currency currency;
 
     @Column(nullable = false)
-    @Min(value = 0, message = "Balance must be non-negative")
-    @Digits(integer = 10, fraction = 2, message = "Balance must not exceed 10 digits and 2 decimal places")
+    @Positive(message = "Balance must be a positive number")
     private double balance;
 
     @Enumerated(EnumType.STRING)
