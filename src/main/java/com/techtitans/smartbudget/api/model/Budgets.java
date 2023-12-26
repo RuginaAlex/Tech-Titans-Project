@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "bugdets")
-public class ExpenseCategory {
+public class Budgets {
 
     @Id
     @Column(name = "budget_id")
