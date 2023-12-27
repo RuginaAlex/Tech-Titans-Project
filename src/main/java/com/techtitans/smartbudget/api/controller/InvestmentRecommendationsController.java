@@ -9,39 +9,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/investmentRecommendations")
+@RequestMapping("/api")
 public class InvestmentRecommendationsController {
 
     @Autowired
     private InvestmentRecommendationsService investmentRecommendationsService;
 
-    @PostMapping
+    @PostMapping("/investmentRecommendation")
     public ResponseEntity<InvestmentRecommendations> createInvestmentRecommendation(@RequestBody InvestmentRecommendations investmentRecommendation) {
         InvestmentRecommendations createdInvestmentRecommendation = investmentRecommendationsService.create(investmentRecommendation);
         return ResponseEntity.ok(createdInvestmentRecommendation);
     }
 
-    @GetMapping
+    @GetMapping("/investmentRecommendations")
     public ResponseEntity<List<InvestmentRecommendations>> getAllInvestmentRecommendations() {
         List<InvestmentRecommendations> investmentRecommendations = investmentRecommendationsService.getAll();
         return ResponseEntity.ok(investmentRecommendations);
     }
 
-    @GetMapping("/{recommendationId}")
-    public ResponseEntity<InvestmentRecommendations> getInvestmentRecommendationById(@PathVariable String recommendationId) {
+    @GetMapping("/investmentRecommendation/{recommendationId}")
+    public ResponseEntity<InvestmentRecommendations> getInvestmentRecommendationById(@PathVariable int recommendationId) {
         return investmentRecommendationsService.getById(recommendationId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{recommendationId}")
-    public ResponseEntity<Void> updateInvestmentRecommendation(@PathVariable String recommendationId, @RequestBody InvestmentRecommendations investmentRecommendation) {
+    @PutMapping("/investmentRecommendation/{recommendationId}")
+    public ResponseEntity<Void> updateInvestmentRecommendation(@PathVariable int recommendationId, @RequestBody InvestmentRecommendations investmentRecommendation) {
         investmentRecommendationsService.update(recommendationId, investmentRecommendation);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{recommendationId}")
-    public ResponseEntity<Void> deleteInvestmentRecommendation(@PathVariable String recommendationId) {
+    @DeleteMapping("/investmentRecommendation/{recommendationId}")
+    public ResponseEntity<Void> deleteInvestmentRecommendation(@PathVariable int recommendationId) {
         investmentRecommendationsService.delete(recommendationId);
         return ResponseEntity.ok().build();
     }

@@ -9,39 +9,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/expenseCategories")
+@RequestMapping("/api")
 public class ExpenseCategoryController {
 
     @Autowired
     private ExpenseCategoryService expenseCategoryService;
 
-    @PostMapping
+    @PostMapping("/expenseCategorie")
     public ResponseEntity<ExpenseCategory> createExpenseCategory(@RequestBody ExpenseCategory expenseCategory) {
         ExpenseCategory createdExpenseCategory = expenseCategoryService.create(expenseCategory);
         return ResponseEntity.ok(createdExpenseCategory);
     }
 
-    @GetMapping
+    @GetMapping("/expenseCategories")
     public ResponseEntity<List<ExpenseCategory>> getAllExpenseCategories() {
         List<ExpenseCategory> expenseCategories = expenseCategoryService.getAll();
         return ResponseEntity.ok(expenseCategories);
     }
 
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<ExpenseCategory> getExpenseCategoryById(@PathVariable String categoryId) {
+    @GetMapping("/expenseCategorie/{categoryId}")
+    public ResponseEntity<ExpenseCategory> getExpenseCategoryById(@PathVariable int categoryId) {
         return expenseCategoryService.getById(categoryId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{categoryId}")
-    public ResponseEntity<Void> updateExpenseCategory(@PathVariable String categoryId, @RequestBody ExpenseCategory expenseCategory) {
+    @PutMapping("/expenseCategorie/{categoryId}")
+    public ResponseEntity<Void> updateExpenseCategory(@PathVariable int categoryId, @RequestBody ExpenseCategory expenseCategory) {
         expenseCategoryService.update(categoryId, expenseCategory);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> deleteExpenseCategory(@PathVariable String categoryId) {
+    @DeleteMapping("/expenseCategorie/{categoryId}")
+    public ResponseEntity<Void> deleteExpenseCategory(@PathVariable int categoryId) {
         expenseCategoryService.delete(categoryId);
         return ResponseEntity.ok().build();
     }

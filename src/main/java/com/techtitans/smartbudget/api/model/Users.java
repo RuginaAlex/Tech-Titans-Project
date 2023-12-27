@@ -20,7 +20,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private String user_id;
+    private int user_id;
 
     @Length(max = 255,message = "Try again! Your username is too long")
     @NotEmpty(message = "Try again! Your username cannot be empty")
@@ -49,7 +49,7 @@ public class Users {
     @Override
     public String toString() {
         return "Users{" +
-                "user_id='" + user_id + '\'' +
+                "user_id=" + user_id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password_hash='" + password_hash + '\'' +

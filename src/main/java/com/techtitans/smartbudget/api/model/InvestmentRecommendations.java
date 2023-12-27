@@ -16,7 +16,7 @@ public class InvestmentRecommendations {
 
     @Id
     @Column(name = "recommendation_id")
-    private String reccomendation_id;
+    private int reccomendation_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

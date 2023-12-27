@@ -22,11 +22,11 @@ public class ExpenseCategoryService {
         return expenseCategoryRepository.findAll();
     }
 
-    public Optional<ExpenseCategory> getById(String categoryId) {
+    public Optional<ExpenseCategory> getById(int categoryId) {
         return expenseCategoryRepository.findById(categoryId);
     }
 
-    public void update(String categoryId, ExpenseCategory updatedCategory) {
+    public void update(int categoryId, ExpenseCategory updatedCategory) {
         Optional<ExpenseCategory> existingCategoryOptional = expenseCategoryRepository.findById(categoryId);
         if (existingCategoryOptional.isPresent()) {
             ExpenseCategory existingCategory = existingCategoryOptional.get();
@@ -40,7 +40,7 @@ public class ExpenseCategoryService {
     }
 
 
-    public void delete(String categoryId) {
+    public void delete(int categoryId) {
         expenseCategoryRepository.deleteById(categoryId);
 
     }

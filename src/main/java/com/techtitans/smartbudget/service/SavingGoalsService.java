@@ -23,11 +23,11 @@ public class SavingGoalsService {
         return savingGoalsRepository.findAll();
     }
 
-    public Optional<SavingGoals> getById(String goalId) {
+    public Optional<SavingGoals> getById(int goalId) {
         return savingGoalsRepository.findById(goalId);
     }
 
-    public void update(String goalId, SavingGoals updatedGoal) {
+    public void update(int goalId, SavingGoals updatedGoal) {
         Optional<SavingGoals> existingGoalOptional = savingGoalsRepository.findById(goalId);
         if (existingGoalOptional.isPresent()) {
             SavingGoals existingGoal = existingGoalOptional.get();
@@ -43,7 +43,7 @@ public class SavingGoalsService {
         }
     }
 
-    public void delete(String goalId) {
+    public void delete(int goalId) {
         savingGoalsRepository.deleteById(goalId);
     }
 

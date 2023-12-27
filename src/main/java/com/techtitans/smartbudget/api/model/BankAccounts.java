@@ -29,7 +29,7 @@ public class BankAccounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
-    private String account_id;
+    private int account_id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

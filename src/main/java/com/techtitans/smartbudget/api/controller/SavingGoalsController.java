@@ -9,39 +9,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/savingGoals")
+@RequestMapping("/api")
 public class SavingGoalsController {
 
     @Autowired
     private SavingGoalsService savingGoalsService;
 
-    @PostMapping
+    @PostMapping("/savingGoal")
     public ResponseEntity<SavingGoals> createSavingGoal(@RequestBody SavingGoals savingGoal) {
         SavingGoals createdSavingGoal = savingGoalsService.create(savingGoal);
         return ResponseEntity.ok(createdSavingGoal);
     }
 
-    @GetMapping
+    @GetMapping("/savingGoals")
     public ResponseEntity<List<SavingGoals>> getAllSavingGoals() {
         List<SavingGoals> savingGoals = savingGoalsService.getAll();
         return ResponseEntity.ok(savingGoals);
     }
 
-    @GetMapping("/{goalId}")
-    public ResponseEntity<SavingGoals> getSavingGoalById(@PathVariable String goalId) {
+    @GetMapping("/savingGoal/{goalId}")
+    public ResponseEntity<SavingGoals> getSavingGoalById(@PathVariable int goalId) {
         return savingGoalsService.getById(goalId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{goalId}")
-    public ResponseEntity<Void> updateSavingGoal(@PathVariable String goalId, @RequestBody SavingGoals savingGoal) {
+    @PutMapping("/savingGoal/{goalId}")
+    public ResponseEntity<Void> updateSavingGoal(@PathVariable int goalId, @RequestBody SavingGoals savingGoal) {
         savingGoalsService.update(goalId, savingGoal);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{goalId}")
-    public ResponseEntity<Void> deleteSavingGoal(@PathVariable String goalId) {
+    @DeleteMapping("/savingGoal/{goalId}")
+    public ResponseEntity<Void> deleteSavingGoal(@PathVariable int goalId) {
         savingGoalsService.delete(goalId);
         return ResponseEntity.ok().build();
     }

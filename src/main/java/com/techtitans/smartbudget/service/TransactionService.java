@@ -23,11 +23,11 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Optional<Transaction> getById(String transactionId) {
+    public Optional<Transaction> getById(int transactionId) {
         return transactionRepository.findById(transactionId);
     }
 
-    public void update(String transactionId, Transaction updatedTransaction) {
+    public void update(int transactionId, Transaction updatedTransaction) {
         Optional<Transaction> existingTransactionOptional = transactionRepository.findById(transactionId);
         if (existingTransactionOptional.isPresent()) {
             Transaction existingTransaction = existingTransactionOptional.get();
@@ -44,7 +44,7 @@ public class TransactionService {
         }
     }
 
-    public void delete(String transactionId) {
+    public void delete(int transactionId) {
         transactionRepository.deleteById(transactionId);
     }
 
