@@ -18,7 +18,7 @@ import java.util.Date;
 public class SavingGoals {
     @Id
     @Column(name = "goal_id")
-    private String goal_id;
+    private int goal_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

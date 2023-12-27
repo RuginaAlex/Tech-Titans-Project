@@ -9,39 +9,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/budgets")
+@RequestMapping("/api")
 public class BudgetsController {
 
     @Autowired
     private BudgetsService budgetsService;
 
-    @PostMapping
+    @PostMapping("/budget")
     public ResponseEntity<Budgets> createBudget(@RequestBody Budgets budget) {
         Budgets createdBudget = budgetsService.create(budget);
         return ResponseEntity.ok(createdBudget);
     }
 
-    @GetMapping
+    @GetMapping("/budgets")
     public ResponseEntity<List<Budgets>> getAllBudgets() {
         List<Budgets> budgets = budgetsService.getAll();
         return ResponseEntity.ok(budgets);
     }
 
-    @GetMapping("/{budgetId}")
-    public ResponseEntity<Budgets> getBudgetById(@PathVariable String budgetId) {
+    @GetMapping("/budget/{budgetId}")
+    public ResponseEntity<Budgets> getBudgetById(@PathVariable int budgetId) {
         return budgetsService.getById(budgetId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{budgetId}")
-    public ResponseEntity<Void> updateBudget(@PathVariable String budgetId, @RequestBody Budgets budget) {
+    @PutMapping("/budget/{budgetId}")
+    public ResponseEntity<Void> updateBudget(@PathVariable int budgetId, @RequestBody Budgets budget) {
         budgetsService.update(budgetId, budget);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{budgetId}")
-    public ResponseEntity<Void> deleteBudget(@PathVariable String budgetId) {
+    @DeleteMapping("/budget/{budgetId}")
+    public ResponseEntity<Void> deleteBudget(@PathVariable int budgetId) {
         budgetsService.delete(budgetId);
         return ResponseEntity.ok().build();
     }

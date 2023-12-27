@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class ExpenseCategory {
     @Id
     @Column(name = "category_id")
-    private String categoryId;
+    private int categoryId;
 
     @Column(name = "name")
     @NotBlank(message = "Category name must not be blank")

@@ -22,11 +22,11 @@ public class InvestmentRecommendationsService {
         return investmentRecommendationsRepository.findAll();
     }
 
-    public Optional<InvestmentRecommendations> getById(String recommendationId) {
+    public Optional<InvestmentRecommendations> getById(int recommendationId) {
         return investmentRecommendationsRepository.findById(recommendationId);
     }
 
-    public void update(String recommendationId, InvestmentRecommendations updatedRecommendation) {
+    public void update(int recommendationId, InvestmentRecommendations updatedRecommendation) {
         Optional<InvestmentRecommendations> existingRecommendationOptional = investmentRecommendationsRepository.findById(recommendationId);
         if (existingRecommendationOptional.isPresent()) {
             InvestmentRecommendations existingRecommendation = existingRecommendationOptional.get();
@@ -42,7 +42,7 @@ public class InvestmentRecommendationsService {
         }
     }
 
-    public void delete(String recommendationId) {
+    public void delete(int recommendationId) {
         investmentRecommendationsRepository.deleteById(recommendationId);
     }
 

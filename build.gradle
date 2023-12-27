@@ -27,7 +27,6 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator:6.1.7.Final'
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
 	implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -35,8 +34,9 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()

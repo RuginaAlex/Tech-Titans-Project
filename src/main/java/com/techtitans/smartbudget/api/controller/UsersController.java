@@ -21,27 +21,27 @@ public class UsersController {
         return ResponseEntity.ok(createdUser);
     }
 
-    @GetMapping("/users") // Schimbat la plural pentru a aduce toți utilizatorii
+    @GetMapping("/users")
     public ResponseEntity<List<Users>> getAllUsers() {
         List<Users> users = usersService.getAll();
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/user/{userId}") // Adăugat placeholder pentru userId
-    public ResponseEntity<Users> getUserById(@PathVariable String userId) { // Corectat pentru a include @PathVariable
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Users> getUserById(@PathVariable int userId) {
         return usersService.getById(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/user/{userId}") // Adăugat placeholder pentru userId
-    public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody Users user) {
+    @PutMapping("/user/{userId}") 
+    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody Users user) {
         usersService.update(userId, user);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/user/{userId}") // Corectat pentru a include @PathVariable cu numele corect
-    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+    @DeleteMapping("/user/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
         usersService.delete(userId);
         return ResponseEntity.ok().build();
     }

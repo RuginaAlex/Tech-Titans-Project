@@ -16,7 +16,7 @@ import java.util.Date;
 public class Transaction {
     @Id
     @Column(name = "transaction_id")
-    private String transaction_id;
+    private int transaction_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)

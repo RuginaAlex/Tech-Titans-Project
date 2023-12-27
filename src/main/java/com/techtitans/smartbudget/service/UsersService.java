@@ -21,11 +21,11 @@ public class UsersService {
         return usersRepository.findAll();
     }
 
-    public Optional<Users> getById(String userId) {
+    public Optional<Users> getById(int userId) {
         return usersRepository.findById(userId);
     }
 
-    public void update(String userId, Users updatedUser) {
+    public void update(int userId, Users updatedUser) {
         Optional<Users> existingUserOptional = usersRepository.findById(userId);
         if (existingUserOptional.isPresent()) {
             Users existingUser = existingUserOptional.get();
@@ -43,7 +43,7 @@ public class UsersService {
         }
     }
 
-    public void delete(String userId) {
+    public void delete(int userId) {
         usersRepository.deleteById(userId);
         // Handle user not found case
     }

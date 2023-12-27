@@ -21,11 +21,11 @@ public class BankAccountsService {
         return bankAccountsRepository.findAll();
     }
 
-    public Optional<BankAccounts> getById(String accountId) {
+    public Optional<BankAccounts> getById(int accountId) {
         return bankAccountsRepository.findById(accountId);
     }
 
-    public void update(String accountId, BankAccounts updatedBankAccount) {
+    public void update(int accountId, BankAccounts updatedBankAccount) {
         Optional<BankAccounts> existingAccountOptional = bankAccountsRepository.findById(accountId);
         if (existingAccountOptional.isPresent()) {
             BankAccounts existingAccount = existingAccountOptional.get();
@@ -43,7 +43,7 @@ public class BankAccountsService {
         }
     }
 
-    public void delete(String accountId) {
+    public void delete(int accountId) {
         bankAccountsRepository.deleteById(accountId);
         // Handle account not found case
     }

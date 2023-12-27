@@ -21,11 +21,11 @@ public class BudgetsService {
         return budgetsRepository.findAll();
     }
 
-    public Optional<Budgets> getById(String budgetId){
+    public Optional<Budgets> getById(int budgetId){
         return budgetsRepository.findById(budgetId);
     }
 
-    public void update(String budgetId, Budgets updatedBudget) {
+    public void update(int budgetId, Budgets updatedBudget) {
         Optional<Budgets> existingBudgetOptional = budgetsRepository.findById(budgetId);
         if (existingBudgetOptional.isPresent()) {
             Budgets existingBudget = existingBudgetOptional.get();
@@ -44,7 +44,7 @@ public class BudgetsService {
         }
     }
 
-    public void delete (String budgetId){
+    public void delete (int budgetId){
         budgetsRepository.deleteById(budgetId);
         //TODO :  if budget was not found
     }

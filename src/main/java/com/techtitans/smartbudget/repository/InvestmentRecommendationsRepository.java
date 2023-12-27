@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InvestmentRecommendationsRepository extends JpaRepository<InvestmentRecommendations, String> {
+public interface InvestmentRecommendationsRepository extends JpaRepository<InvestmentRecommendations, Integer> {
 
 }

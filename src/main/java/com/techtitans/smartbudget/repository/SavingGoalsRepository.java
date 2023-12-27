@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SavingGoalsRepository extends JpaRepository<SavingGoals, String> {
+public interface SavingGoalsRepository extends JpaRepository<SavingGoals, Integer> {
 }

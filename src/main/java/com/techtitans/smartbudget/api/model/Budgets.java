@@ -19,7 +19,7 @@ public class Budgets {
 
     @Id
     @Column(name = "budget_id")
-    private String budget_id;
+    private int budget_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
