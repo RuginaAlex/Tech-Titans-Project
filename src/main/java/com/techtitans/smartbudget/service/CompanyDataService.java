@@ -38,13 +38,13 @@ public class CompanyDataService {
 
             companyDataRepository.save(existingCompanyData);
         } else {
-            throw new RuntimeException("Company data not found with id: " + companyDataId);
+            throw new RuntimeException("Company dataManagement not found with id: " + companyDataId);
         }
     }
 
     public void delete(int companyDataId) {
         companyDataRepository.deleteById(companyDataId);
-        //TODO Handle company data not found case
+        //TODO Handle company dataManagement not found case
     }
 
 }
