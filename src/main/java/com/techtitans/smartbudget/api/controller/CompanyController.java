@@ -15,7 +15,7 @@ public class CompanyController {
     private CompaniesService companiesService;
 
     @PostMapping("/company")
-    public ResponseEntity<Companies> createCompany(Companies company) {
+    public ResponseEntity<Companies> createCompany(@RequestBody Companies company) {
         Companies createdCompany = companiesService.create(company);
         return ResponseEntity.ok(createdCompany);
     }
@@ -27,20 +27,27 @@ public class CompanyController {
     }
 
     @GetMapping("/company/{companyId}")
-    public ResponseEntity<Companies> getCompanyById(int companyId) {
+    public ResponseEntity<Companies> getCompanyById(@PathVariable int companyId) {
         return companiesService.getById(companyId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/company/{ticker}")
+    public ResponseEntity<Companies> getCompanyByTicker(@PathVariable String ticker) {
+        return companiesService.getByTicker(ticker)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/company/{companyId}")
-    public ResponseEntity<Void> updateCompany(int companyId, Companies company) {
+    public ResponseEntity<Void> updateCompany(@PathVariable int companyId,@RequestBody Companies company) {
         companiesService.update(companyId, company);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/company/{companyId}")
-    public ResponseEntity<Void> deleteCompany(int companyId) {
+    public ResponseEntity<Void> deleteCompany(@PathVariable int companyId) {
         companiesService.delete(companyId);
         return ResponseEntity.ok().build();
     }

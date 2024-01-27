@@ -34,6 +34,12 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+	implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+	// https://mvnrepository.com/artifact/org.json/json
+	implementation 'org.json:json:20231013'
+	// https://mvnrepository.com/artifact/com.liferay/com.fasterxml.jackson.databind
+	implementation 'com.liferay:com.fasterxml.jackson.databind:2.10.5.1.LIFERAY-PATCHED-1'
 
 }
 

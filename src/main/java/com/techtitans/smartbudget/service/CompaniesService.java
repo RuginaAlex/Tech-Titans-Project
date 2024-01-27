@@ -46,4 +46,7 @@ public class CompaniesService {
         //TODO Handle company not found case
     }
 
+    public Optional<Companies> getByTicker(String ticker) {
+        return companiesRepository.findByTicker(ticker);
+    }
 }
