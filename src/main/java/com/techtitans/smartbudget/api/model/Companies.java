@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -39,5 +39,6 @@ public class Companies {
 
     @Column(name = "last_date_fetched")
     @PastOrPresent(message = "Last date fetched must be in the past or present")
-    private Date last_date_fetched;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime last_date_fetched;
 }

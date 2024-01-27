@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class CompanyData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_data")
-    private int id_data;
+    private long id_data;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_company", referencedColumnName = "id_company")
@@ -42,8 +44,8 @@ public class CompanyData {
     private double close;
 
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @PastOrPresent(message = "Date must be in the past or present")
-    private java.util.Date date;
+    private LocalDateTime date;
 
 }

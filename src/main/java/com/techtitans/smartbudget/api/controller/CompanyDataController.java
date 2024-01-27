@@ -15,7 +15,7 @@ public class CompanyDataController {
     private CompanyDataService companyDataService;
 
     @PostMapping("/companyData")
-    public ResponseEntity<CompanyData> createCompanyData(CompanyData companyData) {
+    public ResponseEntity<CompanyData> createCompanyData(@RequestBody CompanyData companyData) {
         CompanyData createdCompanyData = companyDataService.create(companyData);
         return ResponseEntity.ok(createdCompanyData);
     }
@@ -27,20 +27,20 @@ public class CompanyDataController {
     }
 
     @GetMapping("/companyData/{companyDataId}")
-    public ResponseEntity<CompanyData> getCompanyDataById(int companyDataId) {
+    public ResponseEntity<CompanyData> getCompanyDataById(@PathVariable int companyDataId) {
         return companyDataService.getById(companyDataId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/companyData/{companyDataId}")
-    public ResponseEntity<Void> updateCompanyData(int companyDataId, CompanyData companyData) {
+    public ResponseEntity<Void> updateCompanyData(@PathVariable int companyDataId,@RequestBody CompanyData companyData) {
         companyDataService.update(companyDataId, companyData);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/companyData/{companyDataId}")
-    public ResponseEntity<Void> deleteCompanyData(int companyDataId) {
+    public ResponseEntity<Void> deleteCompanyData(@PathVariable int companyDataId) {
         companyDataService.delete(companyDataId);
         return ResponseEntity.ok().build();
     }
