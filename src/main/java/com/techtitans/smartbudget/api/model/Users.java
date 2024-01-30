@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -40,11 +40,11 @@ public class Users {
 
     @Column (name = "date_created")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date_created;
+    private LocalDateTime date_created;
 
     @Column (name = "last_login")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date last_login;
+    private LocalDateTime last_login;
 
     @Override
     public String toString() {

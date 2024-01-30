@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -32,8 +32,9 @@ public class Transaction {
     private String type;
 
     @Column(name = "timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
     @PastOrPresent(message = "Timestamp must be in the past or present")
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
 
     @Column(name = "description")

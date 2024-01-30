@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -34,9 +34,9 @@ public class SavingGoals {
     private double current_amount;
 
     @Column(name = "deadline", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @FutureOrPresent(message = "Deadline must be in the future or present")
-    private Date deadline;
+    private LocalDateTime deadline;
 
 
 
