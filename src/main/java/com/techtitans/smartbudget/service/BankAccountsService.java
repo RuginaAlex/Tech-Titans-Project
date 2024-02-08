@@ -74,7 +74,6 @@ public class BankAccountsService {
         withdrawalTransaction.setTimestamp(LocalDateTime.now());
         withdrawalTransaction.setDescription("Transfer to " + recipientIban);
         transactionRepository.save(withdrawalTransaction);
-        bankAccountsRepository.save(senderAccount);
 
         // Procesează depunerea în contul destinatarului
         recipientAccount.setBalance(recipientAccount.getBalance() + amount);
@@ -85,8 +84,10 @@ public class BankAccountsService {
         depositTransaction.setTimestamp(LocalDateTime.now());
         depositTransaction.setDescription("Transfer from " + senderIban);
         transactionRepository.save(depositTransaction);
-        bankAccountsRepository.save(recipientAccount);
 
+        // Salvează ambele conturi cu noile solduri
+        bankAccountsRepository.save(senderAccount);
+        bankAccountsRepository.save(recipientAccount);
     }
 
 }
