@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class InvestmentRecommendations {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recommendation_id")
     private int reccomendation_id;
 

@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,6 +18,7 @@ import java.util.Date;
 public class Budgets {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "budget_id")
     private int budget_id;
 
@@ -34,14 +35,14 @@ public class Budgets {
     private double amount;
 
     @Column(name = "start_date", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @PastOrPresent(message = "Start date must be in the past or present")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "end_date", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @FutureOrPresent(message = "End date must be in the future or present")
-    private Date endDate;
+    private LocalDateTime endDate;
 
 
 

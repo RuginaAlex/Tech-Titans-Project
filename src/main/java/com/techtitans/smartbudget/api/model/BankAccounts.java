@@ -38,7 +38,7 @@ public class BankAccounts {
 
     @Column(name = "account_number", length = 24)
     @Pattern(regexp = "RO\\d{2}[A-Z]{4}\\d{16}", message = "Invalid IBAN format")
-    private String account_number;
+    private String accountNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "currency")

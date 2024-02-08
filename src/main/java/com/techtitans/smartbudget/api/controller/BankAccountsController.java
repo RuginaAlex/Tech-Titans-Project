@@ -1,8 +1,12 @@
 package com.techtitans.smartbudget.api.controller;
 
+import com.techtitans.smartbudget.api.dto.TransferRequestDTO;
+import com.techtitans.smartbudget.api.exceptions.InsufficientFundsException;
 import com.techtitans.smartbudget.api.model.BankAccounts;
 import com.techtitans.smartbudget.service.BankAccountsService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +48,20 @@ public class BankAccountsController {
     public ResponseEntity<Void> deleteBankAccount(@PathVariable int accountId) {
         bankAccountsService.delete(accountId);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<?> transferMoney(@RequestBody TransferRequestDTO transferRequest) {
+        try {
+            bankAccountsService.transferFunds(
+                    transferRequest.getSenderIban(),
+                    transferRequest.getRecipientIban(),
+                    transferRequest.getAmount()
+            );
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (EntityNotFoundException | InsufficientFundsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
