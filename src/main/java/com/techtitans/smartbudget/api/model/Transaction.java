@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 @Table(name = "transactions", schema = "public")
 public class Transaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
     private int transaction_id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     private BankAccounts account;
 
@@ -41,6 +42,8 @@ public class Transaction {
     @NotBlank(message = "Description must not be blank")
     @Size(max = 255, message = "Description must not exceed 255 characters")
     private String description;
+
+
 
 
 

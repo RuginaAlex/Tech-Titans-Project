@@ -1,10 +1,16 @@
 package com.techtitans.smartbudget.service;
 
+import com.techtitans.smartbudget.api.exceptions.InsufficientFundsException;
 import com.techtitans.smartbudget.api.model.BankAccounts;
+import com.techtitans.smartbudget.api.model.Transaction;
 import com.techtitans.smartbudget.repository.BankAccountsRepository;
+import com.techtitans.smartbudget.repository.TransactionRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +18,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BankAccountsService {
     private final BankAccountsRepository bankAccountsRepository;
+    private final TransactionRepository transactionRepository;
 
     public BankAccounts create(BankAccounts bankAccount) {
         return bankAccountsRepository.save(bankAccount);
@@ -30,21 +37,56 @@ public class BankAccountsService {
         if (existingAccountOptional.isPresent()) {
             BankAccounts existingAccount = existingAccountOptional.get();
 
-            // Update fields here
-            existingAccount.setAccount_number(updatedBankAccount.getAccount_number());
+            existingAccount.setAccountNumber(updatedBankAccount.getAccountNumber());
             existingAccount.setCurrency(updatedBankAccount.getCurrency());
             existingAccount.setBalance(updatedBankAccount.getBalance());
             existingAccount.setAccount_Type(updatedBankAccount.getAccount_Type());
-            // ... și așa mai departe pentru fiecare câmp pe care dorești să-l actualizezi
 
             bankAccountsRepository.save(existingAccount); // Salvăm contul bancar actualizat
         } else {
-            throw new RuntimeException("Bank account not found with id: " + accountId); // sau orice altă gestionare a erorilor preferi
+            throw new RuntimeException("Bank account not found with id: " + accountId);
         }
     }
 
     public void delete(int accountId) {
         bankAccountsRepository.deleteById(accountId);
-        // Handle account not found case
     }
+
+    @Transactional
+    public void transferFunds(String senderIban, String recipientIban, double amount) {
+        // Găsește conturile bancare după IBAN
+        BankAccounts senderAccount = bankAccountsRepository.findByAccountNumber(senderIban)
+                .orElseThrow(() -> new EntityNotFoundException("Contul expeditorului nu a fost găsit."));
+        BankAccounts recipientAccount = bankAccountsRepository.findByAccountNumber(recipientIban)
+                .orElseThrow(() -> new EntityNotFoundException("Contul destinatarului nu a fost găsit."));
+
+        // Verifică dacă expeditorul are suficienți bani
+        if (senderAccount.getBalance() < amount) {
+            throw new InsufficientFundsException("Sold insuficient pentru transfer.");
+        }
+
+        // Procesează retragerea din contul expeditorului
+        senderAccount.setBalance(senderAccount.getBalance() - amount);
+        Transaction withdrawalTransaction = new Transaction();
+        withdrawalTransaction.setAccount(senderAccount);
+        withdrawalTransaction.setAmount(amount);
+        withdrawalTransaction.setType("WITHDRAWAL");
+        withdrawalTransaction.setTimestamp(LocalDateTime.now());
+        withdrawalTransaction.setDescription("Transfer to " + recipientIban);
+        transactionRepository.save(withdrawalTransaction);
+        bankAccountsRepository.save(senderAccount);
+
+        // Procesează depunerea în contul destinatarului
+        recipientAccount.setBalance(recipientAccount.getBalance() + amount);
+        Transaction depositTransaction = new Transaction();
+        depositTransaction.setAccount(recipientAccount);
+        depositTransaction.setAmount(amount);
+        depositTransaction.setType("DEPOSIT");
+        depositTransaction.setTimestamp(LocalDateTime.now());
+        depositTransaction.setDescription("Transfer from " + senderIban);
+        transactionRepository.save(depositTransaction);
+        bankAccountsRepository.save(recipientAccount);
+
+    }
+
 }
