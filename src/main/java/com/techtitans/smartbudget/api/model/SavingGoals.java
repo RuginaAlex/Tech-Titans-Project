@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Table(name = "saving_goals",schema = "public")
 public class SavingGoals {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "goal_id")
     private int goal_id;
 

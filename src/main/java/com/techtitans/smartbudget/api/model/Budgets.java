@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class Budgets {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "budget_id")
     private int budget_id;
 
