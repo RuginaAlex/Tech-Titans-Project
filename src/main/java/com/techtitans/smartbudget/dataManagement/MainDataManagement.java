@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 public class MainDataManagement {
@@ -30,18 +33,25 @@ public class MainDataManagement {
     @Async
     public void runInBackground() {
         try {
+            ExecutorService executor = Executors.newFixedThreadPool(10); // Adjust the thread pool size as needed
 
             while (true) {
+                var companies = Objects.requireNonNull(companyController.getAllCompanies().getBody());
 
-                Objects.requireNonNull(companyController.getAllCompanies().getBody()).forEach(company -> {
-                    try {
-                        addNewDataInDatabase(company);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                CompletableFuture<?>[] futures = companies.stream()
+                        .map(company -> CompletableFuture.runAsync(() -> {
+                            try {
+                                addNewDataInDatabase(company);
+                            } catch (IOException e) {
+                                // Handle the exception here
+                                System.out.println("Error while adding new data in database for company: " + company.getName());
+                            }
+                        }, executor))
+                        .toArray(CompletableFuture[]::new);
 
-                Thread.sleep(100); // Sleep for 0.1 seconds
+                CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
+
+                Thread.sleep(50); // Sleep for 0.05 seconds
             }
         } catch (Exception e) {
             System.out.println("Background task was interrupted");
@@ -54,24 +64,23 @@ public class MainDataManagement {
     public void addNewDataInDatabase(Companies company) throws IOException {
         String ticker = company.getTicker();
         var date = company.getLast_date_fetched();
-        if (date.getHour() < 13) {
-            date = date.withHour(13);
-        } else if (date.getHour() >= 21) {
+
+        if (date.getHour() >= 21){
             date = date.plusDays(1);
-            date = date.withHour(13);
-        } else {
-            date = date.plusHours(1);
+            date = date.withHour(12);
         }
+
+        if (date.getHour() <= 13){
+            date = date.withHour(13);
+        }
+
         if (date.isAfter(LocalDateTime.now())) {
             return;
         }
-        company.setLast_date_fetched(date);
-        companyController.updateCompany(company.getId_company(), company);
 
         OkHttpClient client = new OkHttpClient();
         var url = getUrl(date, ticker);
 
-        // "+date.getYear()+"-"+date.getMonthValue()+"-"+date.getDayOfMonth()+"T"+date.getHour()+"%3A"+date.getMinute()+"%3A"+date.getSecond()+"&adjustment=raw&feed=iex&currency=EUR&sort=asc"
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -101,6 +110,15 @@ public class MainDataManagement {
             var companyData = new CompanyData(0, company, open, high, low, close, timestamp);
 
             companyDataController.createCompanyData(companyData);
+
+            timestamp = timestamp.plusHours(1);
+            if (timestamp.getHour() >= 21) {
+                timestamp = timestamp.plusDays(1);
+                timestamp = timestamp.withHour(12);
+            }
+
+            company.setLast_date_fetched(timestamp);
+            companyController.updateCompany(company.getId_company(), company);
 
         }
 
