@@ -33,7 +33,8 @@ public class MainDataManagement {
     @Async
     public void runInBackground() {
         try {
-            ExecutorService executor = Executors.newFixedThreadPool(10); // Adjust the thread pool size as needed
+            int processors = Runtime.getRuntime().availableProcessors();
+            ExecutorService executor = Executors.newFixedThreadPool(processors*10); // Adjust the thread pool size to the number of available processors
 
             while (true) {
                 var companies = Objects.requireNonNull(companyController.getAllCompanies().getBody());
@@ -57,7 +58,6 @@ public class MainDataManagement {
             System.out.println("Background task was interrupted");
             Thread.currentThread().interrupt();
         }
-
     }
 
     @Async
