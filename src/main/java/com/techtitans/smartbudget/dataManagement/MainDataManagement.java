@@ -32,7 +32,7 @@ public class MainDataManagement {
 
     @Async
     public void runInBackground() {
-        try {
+
             int processors = Runtime.getRuntime().availableProcessors();
             ExecutorService executor = Executors.newFixedThreadPool(processors*10); // Adjust the thread pool size to the number of available processors
 
@@ -52,12 +52,8 @@ public class MainDataManagement {
 
                 CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
 
-                Thread.sleep(50); // Sleep for 0.05 seconds
             }
-        } catch (Exception e) {
-            System.out.println("Background task was interrupted");
-            Thread.currentThread().interrupt();
-        }
+
     }
 
     @Async
@@ -95,7 +91,12 @@ public class MainDataManagement {
         var responseString = response.body().string();
 
         var jsonObject = new JSONObject(responseString);
-        jsonObject = jsonObject.getJSONObject("bars");
+
+        try {
+            jsonObject = jsonObject.getJSONObject("bars");
+        }catch (Exception e) {
+            return;
+        }
         var jsonArray = jsonObject.getJSONArray(ticker);
 
         for (int i = 0; i < jsonArray.length(); i++) {
