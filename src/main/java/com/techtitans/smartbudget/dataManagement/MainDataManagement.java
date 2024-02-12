@@ -67,11 +67,11 @@ public class MainDataManagement {
 
         if (date.getHour() >= 21){
             date = date.plusDays(1);
-            date = date.withHour(12);
+            date = date.withHour(14);
         }
 
-        if (date.getHour() <= 13){
-            date = date.withHour(13);
+        if (date.getHour() <= 14){
+            date = date.withHour(14);
         }
 
         if (date.isAfter(LocalDateTime.now())) {
@@ -114,7 +114,7 @@ public class MainDataManagement {
             timestamp = timestamp.plusHours(1);
             if (timestamp.getHour() >= 21) {
                 timestamp = timestamp.plusDays(1);
-                timestamp = timestamp.withHour(12);
+                timestamp = timestamp.withHour(14);
             }
 
             company.setLast_date_fetched(timestamp);
