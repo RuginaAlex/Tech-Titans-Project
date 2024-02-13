@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.service;
 
-import com.techtitans.smartbudget.security.config.JwtClaim;
+import com.techtitans.smartbudget.security.dto.JwtClaim;
 import com.techtitans.smartbudget.security.dto.Token;
 import com.techtitans.smartbudget.security.dto.UserPrincipal;
 import com.techtitans.smartbudget.util.ReflectionUtils;

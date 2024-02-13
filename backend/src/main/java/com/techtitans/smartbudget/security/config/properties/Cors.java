@@ -1,4 +1,4 @@
-package com.techtitans.smartbudget.security.dto;
+package com.techtitans.smartbudget.security.config.properties;
 
 import java.util.List;
 

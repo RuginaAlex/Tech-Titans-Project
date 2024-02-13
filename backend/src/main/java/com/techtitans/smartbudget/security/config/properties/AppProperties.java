@@ -1,4 +1,4 @@
-package com.techtitans.smartbudget.security.dto;
+package com.techtitans.smartbudget.security.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

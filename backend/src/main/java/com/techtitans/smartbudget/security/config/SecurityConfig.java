@@ -1,10 +1,10 @@
 package com.techtitans.smartbudget.security.config;
 
-import com.techtitans.smartbudget.security.dto.AppProperties;
-import com.techtitans.smartbudget.security.dto.Security;
-import com.techtitans.smartbudget.security.dto.Cors;
 import com.techtitans.smartbudget.repository.UsersRepository;
 import com.techtitans.smartbudget.security.authprovider.AuthenticationProvider;
+import com.techtitans.smartbudget.security.config.properties.AppProperties;
+import com.techtitans.smartbudget.security.config.properties.Cors;
+import com.techtitans.smartbudget.security.config.properties.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,7 +68,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-
         var authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authManagerBuilder.parentAuthenticationManager(null);
         authManagerBuilder.authenticationProvider(new AuthenticationProvider(userRepository, passwordEncoder(), appProperties));

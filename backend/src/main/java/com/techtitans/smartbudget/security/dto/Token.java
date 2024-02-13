@@ -2,7 +2,6 @@ package com.techtitans.smartbudget.security.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.techtitans.smartbudget.security.config.JwtClaim;
 
 import java.util.Date;
 

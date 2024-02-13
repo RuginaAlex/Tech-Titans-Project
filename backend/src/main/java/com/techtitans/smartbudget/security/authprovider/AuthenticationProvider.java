@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.security.authprovider;
 
-import com.techtitans.smartbudget.security.dto.AppProperties;
+import com.techtitans.smartbudget.security.config.properties.AppProperties;
 import com.techtitans.smartbudget.repository.UsersRepository;
 import com.techtitans.smartbudget.security.dto.UserPrincipal;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

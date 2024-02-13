@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.api.controller;
 
-import com.techtitans.smartbudget.security.dto.AppProperties;
+import com.techtitans.smartbudget.security.config.properties.AppProperties;
 import com.techtitans.smartbudget.security.dto.Token;
 import com.techtitans.smartbudget.security.dto.UserPrincipal;
 import com.techtitans.smartbudget.service.TokenService;

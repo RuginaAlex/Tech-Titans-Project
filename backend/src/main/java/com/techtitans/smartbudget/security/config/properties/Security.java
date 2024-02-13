@@ -1,4 +1,4 @@
-package com.techtitans.smartbudget.security.dto;
+package com.techtitans.smartbudget.security.config.properties;
 
 public class Security {
     private Auth auth = new Auth();

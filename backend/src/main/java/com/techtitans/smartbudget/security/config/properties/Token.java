@@ -1,6 +1,6 @@
-package com.techtitans.smartbudget.security.dto;
+package com.techtitans.smartbudget.security.config.properties;
 
-public class TokenOld {
+public class Token {
     private String apiSecret;
     private long expirationMsec;
 
