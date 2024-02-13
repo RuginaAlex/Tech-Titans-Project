@@ -2,8 +2,8 @@ package com.techtitans.smartbudget.dataManagement;
 
 import com.techtitans.smartbudget.api.controller.CompanyController;
 import com.techtitans.smartbudget.api.controller.CompanyDataController;
-import com.techtitans.smartbudget.api.model.Companies;
-import com.techtitans.smartbudget.api.model.CompanyData;
+import com.techtitans.smartbudget.model.Companies;
+import com.techtitans.smartbudget.model.CompanyData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

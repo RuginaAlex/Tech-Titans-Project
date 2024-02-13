@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.service;
 
-import com.techtitans.smartbudget.api.model.Companies;
+import com.techtitans.smartbudget.model.Companies;
 import com.techtitans.smartbudget.repository.CompaniesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

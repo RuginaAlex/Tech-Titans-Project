@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.repository;
 
-import com.techtitans.smartbudget.api.model.InvestmentRecommendations;
+import com.techtitans.smartbudget.model.InvestmentRecommendations;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

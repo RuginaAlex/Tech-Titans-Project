@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.service;
 
-import com.techtitans.smartbudget.api.model.SavingGoals;
+import com.techtitans.smartbudget.model.SavingGoals;
 
 import com.techtitans.smartbudget.repository.SavingGoalsRepository;
 import lombok.AllArgsConstructor;

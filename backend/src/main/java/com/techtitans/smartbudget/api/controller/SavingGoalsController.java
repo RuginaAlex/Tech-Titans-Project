@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.api.controller;
 
-import com.techtitans.smartbudget.api.model.SavingGoals;
+import com.techtitans.smartbudget.model.SavingGoals;
 import com.techtitans.smartbudget.service.SavingGoalsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

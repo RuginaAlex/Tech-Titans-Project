@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.api.controller;
 
-import com.techtitans.smartbudget.api.model.CompanyData;
+import com.techtitans.smartbudget.model.CompanyData;
 import com.techtitans.smartbudget.service.CompanyDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

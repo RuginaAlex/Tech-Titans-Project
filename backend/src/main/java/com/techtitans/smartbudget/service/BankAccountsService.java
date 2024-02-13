@@ -1,8 +1,8 @@
 package com.techtitans.smartbudget.service;
 
 import com.techtitans.smartbudget.api.exceptions.InsufficientFundsException;
-import com.techtitans.smartbudget.api.model.BankAccounts;
-import com.techtitans.smartbudget.api.model.Transaction;
+import com.techtitans.smartbudget.model.BankAccounts;
+import com.techtitans.smartbudget.model.Transaction;
 import com.techtitans.smartbudget.repository.BankAccountsRepository;
 import com.techtitans.smartbudget.repository.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
