@@ -29,7 +29,7 @@ public class AppInitializer {
     @PostConstruct
     public void postConstruct() {
         setupDatabase();
-        mainDataManagement.runInBackground();
+//        mainDataManagement.runInBackground();
     }
 
     private void setupDatabase() {

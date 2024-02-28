@@ -43,7 +43,7 @@ public class MainDataManagement {
                     .map(company -> CompletableFuture.runAsync(() -> {
                         try {
                             addNewDataInDatabase(company);
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             // Handle the exception here
                             System.out.println("Error while adding new data in database for company: " + company.getName());
                         }
@@ -51,7 +51,6 @@ public class MainDataManagement {
                     .toArray(CompletableFuture[]::new);
 
             CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
-
         // }
 
     }
@@ -61,16 +60,16 @@ public class MainDataManagement {
         String ticker = company.getTicker();
         var date = company.getLast_date_fetched();
 
-        if (date.getHour() >= 21){
+        if (date.getHour() >= 21) {
             date = date.plusDays(1);
             date = date.withHour(14);
         }
 
-        if (date.getHour() <= 14){
+        if (date.getHour() <= 14) {
             date = date.withHour(14);
         }
 
-        if (date.isAfter(LocalDateTime.now())) {
+        if (date.isAfter(LocalDateTime.of(2023,1, 20, 0, 0))){
             return;
         }
 
@@ -94,10 +93,12 @@ public class MainDataManagement {
 
         try {
             jsonObject = jsonObject.getJSONObject("bars");
-        }catch (Exception e) {
+        } catch (Exception e) {
             return;
         }
         var jsonArray = jsonObject.getJSONArray(ticker);
+
+        var timestamp = date;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             var data = jsonArray.getJSONObject(i);
@@ -106,22 +107,22 @@ public class MainDataManagement {
             var low = data.getDouble("l");
             var high = data.getDouble("h");
             var time = data.getString("t");
-            var timestamp = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+            timestamp = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
 
             var companyData = new CompanyData(0, company, open, high, low, close, timestamp);
 
-            companyDataController.createCompanyData(companyData);
-
-            timestamp = timestamp.plusHours(1);
-            if (timestamp.getHour() >= 21) {
-                timestamp = timestamp.plusDays(1);
-                timestamp = timestamp.withHour(14);
+            if (close > 0 && open > 0 && low > 0 && high > 0 && timestamp.isAfter(company.getLast_date_fetched())) {
+                companyDataController.createCompanyData(companyData);
             }
-
-            company.setLast_date_fetched(timestamp);
-            companyController.updateCompany(company.getId_company(), company);
-
         }
+        timestamp = timestamp.plusHours(1);
+        if (timestamp.getHour() >= 21) {
+            timestamp = timestamp.plusDays(1);
+            timestamp = timestamp.withHour(14);
+        }
+
+        company.setLast_date_fetched(timestamp);
+        companyController.updateCompany(company.getId_company(), company);
 
     }
 
@@ -154,9 +155,9 @@ public class MainDataManagement {
         }
 
         if (date.getSecond() < 10) {
-            url += "%3A0" + date.getSecond()+"Z";
+            url += "%3A0" + date.getSecond() + "Z";
         } else {
-            url += "%3A" + date.getSecond()+"Z";
+            url += "%3A" + date.getSecond() + "Z";
         }
 
         url += "&limit=1&adjustment=raw&feed=iex&currency=EUR&sort=asc";

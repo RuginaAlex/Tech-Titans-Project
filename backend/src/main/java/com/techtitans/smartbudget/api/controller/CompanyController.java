@@ -33,7 +33,7 @@ public class CompanyController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/company/{ticker}")
+    @GetMapping("/company/ticker/{ticker}")
     public ResponseEntity<Companies> getCompanyByTicker(@PathVariable String ticker) {
         return companiesService.getByTicker(ticker)
                 .map(ResponseEntity::ok)
