@@ -18,6 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,12 +39,12 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf().disable()
-                .cors().and()
-                .httpBasic().and()
-                .formLogin().disable()
-                .logout().disable()
-                .sessionManagement().disable()
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> {})
+                .httpBasic(HttpBasicConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .sessionManagement(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .authenticationManager(authenticationManager(http))
                 .build();

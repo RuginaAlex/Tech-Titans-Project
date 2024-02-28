@@ -14,14 +14,14 @@ public class Privilege {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     private PrivilegeName name;
     @ManyToMany(mappedBy = "privileges")
     private Collection<Role> roles;
 
-    public Privilege(Long id, PrivilegeName name, Set<Role> roles) {
+    public Privilege(Integer id, PrivilegeName name, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.roles = roles;
@@ -30,11 +30,15 @@ public class Privilege {
     public Privilege() {
     }
 
-    public Long getId() {
+    public Privilege(PrivilegeName name) {
+        this.name = name;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

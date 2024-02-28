@@ -32,27 +32,27 @@ public class MainDataManagement {
 
     @Async
     public void runInBackground() {
+        int processors = Runtime.getRuntime().availableProcessors();
+        ExecutorService executor = Executors.newFixedThreadPool(processors); // Adjust the thread pool size to the number of available processors
 
-            int processors = Runtime.getRuntime().availableProcessors();
-            ExecutorService executor = Executors.newFixedThreadPool(processors*10); // Adjust the thread pool size to the number of available processors
+        // todo: improve retrieval of additional info
+        // while (true) {
+            var companies = Objects.requireNonNull(companyController.getAllCompanies().getBody());
 
-            while (true) {
-                var companies = Objects.requireNonNull(companyController.getAllCompanies().getBody());
+            CompletableFuture<?>[] futures = companies.stream()
+                    .map(company -> CompletableFuture.runAsync(() -> {
+                        try {
+                            addNewDataInDatabase(company);
+                        } catch (IOException e) {
+                            // Handle the exception here
+                            System.out.println("Error while adding new data in database for company: " + company.getName());
+                        }
+                    }, executor))
+                    .toArray(CompletableFuture[]::new);
 
-                CompletableFuture<?>[] futures = companies.stream()
-                        .map(company -> CompletableFuture.runAsync(() -> {
-                            try {
-                                addNewDataInDatabase(company);
-                            } catch (IOException e) {
-                                // Handle the exception here
-                                System.out.println("Error while adding new data in database for company: " + company.getName());
-                            }
-                        }, executor))
-                        .toArray(CompletableFuture[]::new);
+            CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
 
-                CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
-
-            }
+        // }
 
     }
 
