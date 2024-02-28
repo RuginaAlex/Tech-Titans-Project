@@ -14,6 +14,6 @@ public class AppInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        mainDataManagement.runInBackground();
+//        mainDataManagement.runInBackground();
     }
 }
