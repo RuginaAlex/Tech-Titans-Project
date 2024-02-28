@@ -2,8 +2,8 @@ package com.techtitans.smartbudget.dataManagement;
 
 import com.techtitans.smartbudget.api.controller.CompanyController;
 import com.techtitans.smartbudget.api.controller.CompanyDataController;
-import com.techtitans.smartbudget.api.model.Companies;
-import com.techtitans.smartbudget.api.model.CompanyData;
+import com.techtitans.smartbudget.model.Companies;
+import com.techtitans.smartbudget.model.CompanyData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,11 +32,11 @@ public class MainDataManagement {
 
     @Async
     public void runInBackground() {
-
         int processors = Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(processors * 10); // Adjust the thread pool size to the number of available processors
+        ExecutorService executor = Executors.newFixedThreadPool(processors); // Adjust the thread pool size to the number of available processors
 
-        while (true) {
+        // todo: improve retrieval of additional info
+        // while (true) {
             var companies = Objects.requireNonNull(companyController.getAllCompanies().getBody());
 
             CompletableFuture<?>[] futures = companies.stream()
@@ -51,8 +51,7 @@ public class MainDataManagement {
                     .toArray(CompletableFuture[]::new);
 
             CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
-
-        }
+        // }
 
     }
 

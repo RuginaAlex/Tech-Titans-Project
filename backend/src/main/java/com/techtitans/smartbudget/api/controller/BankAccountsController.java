@@ -2,7 +2,7 @@ package com.techtitans.smartbudget.api.controller;
 
 import com.techtitans.smartbudget.api.dto.TransferRequestDTO;
 import com.techtitans.smartbudget.api.exceptions.InsufficientFundsException;
-import com.techtitans.smartbudget.api.model.BankAccounts;
+import com.techtitans.smartbudget.model.BankAccounts;
 import com.techtitans.smartbudget.service.BankAccountsService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

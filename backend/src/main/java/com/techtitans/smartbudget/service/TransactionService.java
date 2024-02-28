@@ -1,6 +1,6 @@
 package com.techtitans.smartbudget.service;
 
-import com.techtitans.smartbudget.api.model.Transaction;
+import com.techtitans.smartbudget.model.Transaction;
 
 import com.techtitans.smartbudget.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
