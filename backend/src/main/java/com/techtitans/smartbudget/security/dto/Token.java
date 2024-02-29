@@ -27,6 +27,14 @@ public class Token {
         return userId;
     }
 
+    public Date getExpiration() {
+        return expiration;
+    }
+
+    public boolean isExpired() {
+        return new Date().before(new Date());
+    }
+
     public void setUserId(Integer userId) {
         this.userId = userId;
     }

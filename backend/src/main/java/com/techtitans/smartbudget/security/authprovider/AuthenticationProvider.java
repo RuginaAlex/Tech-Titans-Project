@@ -31,7 +31,6 @@ public class AuthenticationProvider implements org.springframework.security.auth
 
     public Authentication authenticate(String email, String password) {
         return userRepository.findByEmail(email)
-//                .filter(user -> Objects.equals(user.getPassword_hash(), password))
                 .filter(user -> passwordEncoder.matches(password, user.getPassword_hash()))
                 .map(UserPrincipal::new)
                 .map(userDetails -> new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities()))

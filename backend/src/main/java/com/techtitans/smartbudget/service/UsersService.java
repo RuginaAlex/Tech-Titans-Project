@@ -2,6 +2,7 @@ package com.techtitans.smartbudget.service;
 
 import com.techtitans.smartbudget.model.Users;
 import com.techtitans.smartbudget.repository.UsersRepository;
+import com.techtitans.smartbudget.security.dto.UserPrincipal;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,11 @@ public class UsersService {
     public void delete(int userId) {
         usersRepository.deleteById(userId);
         // Handle user not found case
+    }
+
+    public UserPrincipal generateUserPrincipal(Integer userId) {
+        return usersRepository.findById(userId)
+                .map(UserPrincipal::new)
+                .orElse(null);
     }
 }

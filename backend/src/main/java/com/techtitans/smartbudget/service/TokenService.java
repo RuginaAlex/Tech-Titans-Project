@@ -56,9 +56,12 @@ public class TokenService {
      */
     private Token encode(UserPrincipal user, LocalDateTime expirationTime, String tokenSecret) {
         var token = new Token();
+        token.setUserId(user.getUser_id());
+
         var lifetime = ZonedDateTime.of(expirationTime, ZoneId.systemDefault());
         var expiration = Date.from(lifetime.toInstant());
         var claims = getClaims(token, user);
+        claims.put("userId", user.getUser_id());
         claims.put("role", user.getRoleName());
         String jwt = Jwts.builder()
                 .setClaims(claims).signWith(Keys.hmacShaKeyFor(tokenSecret.getBytes(UTF_8)), SignatureAlgorithm.HS512)
@@ -69,7 +72,6 @@ public class TokenService {
     }
 
     private HashMap<String, Object> getClaims(Token token, UserPrincipal user) {
-        token.setUserId(user.getUser_id());
         return ReflectionUtils.getMapFromObject(token, JwtClaim.class);
     }
 
@@ -93,11 +95,17 @@ public class TokenService {
      * @throws IllegalArgumentException                    if the {@code claimsJws} string is {@code null} or empty or only whitespace
      */
     public Token decode(String jwt, String tokenSecret) {
-        var tokenClaims = Jwts.parser().setSigningKey(tokenSecret).parseClaimsJws(jwt.replace(TOKEN_PREFIX, ""));
-        var userId = Optional.ofNullable(tokenClaims.getBody().getSubject())
-                .map(Integer::valueOf)
+        var tokenClaims = Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(tokenSecret.getBytes(UTF_8)))
+                .build()
+                .parseClaimsJws(jwt.replace(TOKEN_PREFIX, ""));
+
+        var userId = Optional.ofNullable(tokenClaims.getBody().get("userId"))
+                .map(Integer.class::cast)
                 .orElse(null);
+
         var expiration = tokenClaims.getBody().getExpiration();
+
         return new Token(userId, expiration, jwt);
     }
 }
