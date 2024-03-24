@@ -1,5 +1,6 @@
 package com.techtitans.smartbudget.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "company_data", schema = "public")
-public class CompanyData {
+@Table(name = "stock_data", schema = "public")
+public class StockData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,8 @@ public class CompanyData {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_company", referencedColumnName = "id_company")
     @NotNull(message = "Company cannot be null")
-    private Companies company;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private StockOptions company;
 
     @Column(name = "open")
     @DecimalMin(value = "0.0", inclusive = false, message = "Open must be greater than 0")

@@ -1,9 +1,5 @@
 package com.techtitans.smartbudget.dataManagement;
 
-import com.techtitans.smartbudget.api.controller.CompanyController;
-import com.techtitans.smartbudget.api.controller.CompanyDataController;
-import com.techtitans.smartbudget.model.Companies;
-import com.techtitans.smartbudget.model.CompanyData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,19 +21,19 @@ import java.util.concurrent.Executors;
 public class MainDataManagement {
 
     @Autowired
-    private CompanyController companyController;
+    private StockOptionsController stockOptionsController;
 
     @Autowired
-    private CompanyDataController companyDataController;
+    private StockDataController stockDataController;
 
     @Async
     public void runInBackground() {
-        int processors = Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(processors); // Adjust the thread pool size to the number of available processors
 
-        // todo: improve retrieval of additional info
-        // while (true) {
-            var companies = Objects.requireNonNull(companyController.getAllCompanies().getBody());
+        int processors = Runtime.getRuntime().availableProcessors();
+        ExecutorService executor = Executors.newFixedThreadPool(processors * 10); // Adjust the thread pool size to the number of available processors
+
+        while (true) {
+            var companies = Objects.requireNonNull(stockOptionsController.getAllCompanies().getBody());
 
             CompletableFuture<?>[] futures = companies.stream()
                     .map(company -> CompletableFuture.runAsync(() -> {
@@ -51,12 +47,13 @@ public class MainDataManagement {
                     .toArray(CompletableFuture[]::new);
 
             CompletableFuture.allOf(futures).join(); // Wait for all futures to complete
-        // }
+
+        }
 
     }
 
     @Async
-    public void addNewDataInDatabase(Companies company) throws IOException {
+    public void addNewDataInDatabase(com.techtitans.smartbudget.model.StockOptions company) throws IOException {
         String ticker = company.getTicker();
         var date = company.getLast_date_fetched();
 
@@ -107,12 +104,13 @@ public class MainDataManagement {
             var low = data.getDouble("l");
             var high = data.getDouble("h");
             var time = data.getString("t");
+            var volume = data.getInt("v");
             timestamp = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
 
-            var companyData = new CompanyData(0, company, open, high, low, close, timestamp);
+            var companyData = new StockData(0, company, open, high, low, close, timestamp);
 
             if (close > 0 && open > 0 && low > 0 && high > 0 && timestamp.isAfter(company.getLast_date_fetched())) {
-                companyDataController.createCompanyData(companyData);
+                stockDataController.createCompanyData(companyData);
             }
         }
         timestamp = timestamp.plusHours(1);
@@ -122,7 +120,7 @@ public class MainDataManagement {
         }
 
         company.setLast_date_fetched(timestamp);
-        companyController.updateCompany(company.getId_company(), company);
+        stockOptionsController.updateCompany(company.getId_company(), company);
 
     }
 

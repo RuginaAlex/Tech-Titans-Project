@@ -23,13 +23,13 @@ public class Transaction {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     private BankAccounts account;
 
-    @Column(name = "amount")
+    @Column(name = "amount_of_shares")
     @Positive(message = "Amount must be a positive number")
     private double amount;
 
 
     @Column(name = "type")
-    @Pattern(regexp = "DEPOSIT|WITHDRAWAL|TRANSFER", message = "Type must be: DEPOSIT, WITHDRAWAL, TRANSFER")
+    @Pattern(regexp = "DEPOSIT|WITHDRAWAL|TRANSFER|BUYING|SELLING", message = "Type must be: DEPOSIT, WITHDRAWAL, TRANSFER, BUYING, SELLING")
     private String type;
 
     @Column(name = "timestamp")
@@ -44,7 +44,13 @@ public class Transaction {
     private String description;
 
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id", referencedColumnName = "id_company")
+    private StockOptions stockOptions;
 
 
+    @Column(name = "price")
+    @Positive(message = "Price must be a positive number")
+    private double price;
 
 }

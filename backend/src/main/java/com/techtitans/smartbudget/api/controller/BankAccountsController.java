@@ -32,8 +32,8 @@ public class BankAccountsController {
     }
 
     @GetMapping("/bankAccount/{userId}")
-    public ResponseEntity<BankAccounts> getBankAccountById(@PathVariable int accountId) {
-        return bankAccountsService.getById(accountId)
+    public ResponseEntity<BankAccounts> getBankAccountById(@PathVariable int userId) {
+        return bankAccountsService.getById(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

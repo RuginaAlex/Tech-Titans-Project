@@ -2,7 +2,7 @@ package com.techtitans.smartbudget.service;
 
 import com.techtitans.smartbudget.model.Users;
 import com.techtitans.smartbudget.repository.UsersRepository;
-import com.techtitans.smartbudget.security.dto.UserPrincipal;
+//import com.techtitans.smartbudget.security.dto.UserPrincipal;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,9 +49,13 @@ public class UsersService {
         // Handle user not found case
     }
 
-    public UserPrincipal generateUserPrincipal(Integer userId) {
-        return usersRepository.findById(userId)
-                .map(UserPrincipal::new)
-                .orElse(null);
+    public Optional<Users> getByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
+
+//    public UserPrincipal generateUserPrincipal(Integer userId) {
+//        return usersRepository.findById(userId)
+//                .map(UserPrincipal::new)
+//                .orElse(null);
+//    }
 }
