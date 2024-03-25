@@ -29,8 +29,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.security:spring-security-crypto'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.hibernate.validator:hibernate-validator:6.1.7.Final'
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
 	implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
@@ -55,10 +57,10 @@ dependencies {
 	testImplementation 'org.mockito:mockito-junit-jupiter:3.6.0'
 
 	// jwt library
-	implementation group: "io.jsonwebtoken", name: "jjwt-api", version: "${jjwtVersion}"
-	implementation group: "io.jsonwebtoken", name: "jjwt-impl", version: "${jjwtVersion}"
-	implementation group: "io.jsonwebtoken", name: "jjwt-jackson", version: "${jjwtVersion}"
-	implementation 'javax.annotation:javax.annotation-api:1.3.2'
+//	implementation group: "io.jsonwebtoken", name: "jjwt-api", version: "${jjwtVersion}"
+//	implementation group: "io.jsonwebtoken", name: "jjwt-impl", version: "${jjwtVersion}"
+//	implementation group: "io.jsonwebtoken", name: "jjwt-jackson", version: "${jjwtVersion}"
+//	implementation 'javax.annotation:javax.annotation-api:1.3.2'
 }
 
 

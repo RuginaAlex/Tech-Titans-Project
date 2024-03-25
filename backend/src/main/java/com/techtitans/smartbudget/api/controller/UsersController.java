@@ -2,6 +2,7 @@ package com.techtitans.smartbudget.api.controller;
 
 import com.techtitans.smartbudget.model.Users;
 import com.techtitans.smartbudget.service.UsersService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,13 @@ public class UsersController {
     public ResponseEntity<List<Users>> getAllUsers() {
         List<Users> users = usersService.getAll();
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/user/username/{username}")
+    public ResponseEntity<Users> getUserByUsername(@PathVariable String username) {
+        return usersService.getByUsername(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{userId}")

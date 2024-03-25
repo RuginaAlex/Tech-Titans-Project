@@ -12,4 +12,5 @@ public class TransferRequestDTO {
     private String recipientIban;
     private double amount;
 
+
 }

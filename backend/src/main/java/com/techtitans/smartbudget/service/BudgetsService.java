@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class BudgetsService {
+
     private final BudgetsRepository budgetsRepository;
 
     public Budgets create(Budgets budget) {
@@ -21,7 +22,7 @@ public class BudgetsService {
         return budgetsRepository.findAll();
     }
 
-    public Optional<Budgets> getById(int budgetId){
+    public Optional<Budgets> getById(int budgetId) {
         return budgetsRepository.findById(budgetId);
     }
 
@@ -44,7 +45,7 @@ public class BudgetsService {
         }
     }
 
-    public void delete (int budgetId){
+    public void delete(int budgetId) {
         budgetsRepository.deleteById(budgetId);
         //TODO :  if budget was not found
     }
