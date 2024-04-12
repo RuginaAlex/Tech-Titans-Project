@@ -29,6 +29,6 @@ public class AccountInventory {
     private BankAccounts account;
 
     @Column(name = "nr_of_stocks_owned")
-    private int nrOfStocksOwned;
+    private double nrOfStocksOwned;
 
 }

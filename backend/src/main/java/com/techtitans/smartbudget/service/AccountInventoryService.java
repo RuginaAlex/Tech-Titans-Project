@@ -16,8 +16,8 @@ public class AccountInventoryService {
         return accountInventoryRepository.findById(accountInventoryId);
     }
 
-    public Optional<AccountInventory> getByUserIdAndAccountId(int userId, int accountId) {
-        return accountInventoryRepository.findByUserIdAndAccountId(userId, accountId);
+    public Optional<AccountInventory> getByUserIdAndAccountId(int companyId, int accountId) {
+        return accountInventoryRepository.findByUserIdAndAccountId(companyId, accountId);
     }
 
     public AccountInventory create(AccountInventory accountInventory) {
@@ -37,7 +37,6 @@ public class AccountInventoryService {
             throw new RuntimeException("AccountInventory not found with id: " + accountId);
         }
     }
-
 
 
 }

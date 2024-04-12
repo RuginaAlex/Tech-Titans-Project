@@ -90,4 +90,8 @@ public class BankAccountsService {
         bankAccountsRepository.save(recipientAccount);
     }
 
+    public Optional<Double> getNumberOfStocksOwnedByUserForCompany(int userId, int companyId) {
+        return bankAccountsRepository.getNumberOfStocksOwnedByUserForCompany(userId, companyId);
+    }
+
 }

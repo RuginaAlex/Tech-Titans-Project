@@ -1,5 +1,8 @@
 package com.techtitans.smartbudget.dataManagement;
 
+import com.techtitans.smartbudget.api.controller.StockDataController;
+import com.techtitans.smartbudget.api.controller.StockOptionsController;
+import com.techtitans.smartbudget.model.StockData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
